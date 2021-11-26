@@ -28,6 +28,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authorization;
 using RestWithASPNet.Repository.Person;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.AspNetCore.Http;
 
 namespace RestWithASPNet
 {
@@ -177,6 +179,10 @@ namespace RestWithASPNet
             
             //Injeção para PATCH de IPersonRepository
             services.AddScoped<IPersonRepository, PersonRepository>();
+
+            //Injeção para sistema de uploads de arquivos
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>(); //<== para configurações de http, usadas na interface 
+            services.AddScoped<IFileBusiness, FileBusinessImplementation>();
 
         }
 
