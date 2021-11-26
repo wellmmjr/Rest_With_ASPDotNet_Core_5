@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using RestWithASPNet.Business;
 using RestWithASPNet.Data.VO;
+using RestWithASPNet.Hypermedia.Filters;
 using RestWithASPNet.Model;
 
 namespace RestWithASPNet.Controllers
@@ -21,12 +22,14 @@ namespace RestWithASPNet.Controllers
         }
 
         [HttpGet]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult FindAll()
         {
             return Ok(_bookBusiness.FindAll());
         }
 
         [HttpGet("{id}")]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult FindById(long id)
         {
             var book = _bookBusiness.FindById(id);
@@ -36,6 +39,7 @@ namespace RestWithASPNet.Controllers
         }
 
         [HttpPost()]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult CreateBook([FromBody] BookVO book)
         {
             if (book == null) return NotFound();
@@ -44,6 +48,7 @@ namespace RestWithASPNet.Controllers
         }
         
         [HttpPut()]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult UpdateBook([FromBody] BookVO book)
         {
             if (book == null) return NotFound();

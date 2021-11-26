@@ -13,6 +13,9 @@ using Serilog;
 using System;
 using System.Collections.Generic;
 using Microsoft.Net.Http.Headers;
+using RestWithASPNet.Hypermedia.Filters;
+using RestWithASPNet.Hypermedia.Abstract;
+using RestWithASPNet.Hypermedia.Enricher;
 
 namespace RestWithASPNet
 {
@@ -63,6 +66,12 @@ namespace RestWithASPNet
                 MigrateDataBase(connection);
             }
 
+            //HATEOAS IMPLEMENTATIONS
+            var filterOptions = new HyperMediaFilterOptions();
+            filterOptions.ContentResponseEnricherList.Add(new PersonEnricher());
+            filterOptions.ContentResponseEnricherList.Add(new BookEnricher());
+            services.AddSingleton(filterOptions);
+
             //provê versionamento de código pelo pacote nuget
             services.AddApiVersioning();
 
@@ -93,6 +102,8 @@ namespace RestWithASPNet
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+
+                endpoints.MapControllerRoute("DefaultApi", "{controller=values}/{id?}"); // adicionado para HATEOAS
             });
         }
 
