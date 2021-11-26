@@ -8,7 +8,7 @@ using RestWithASPNet.Business;
 using RestWithASPNet.Business.Implementations;
 using RestWithASPNet.Model.Context;
 using RestWithASPNet.Repository;
-using RestWithASPNet.Repository.Implementations;
+using RestWithASPNet.Repository.Generic;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -54,11 +54,12 @@ namespace RestWithASPNet
 
             //injeção de dependência para Person
             services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
-            services.AddScoped<IPersonRepository, PersonRepositoryImplementation>();
 
             //injeção de dependência para Book
             services.AddScoped<IBookBusiness, BookBusinessImplementation>();
-            services.AddScoped<IBookRepository, BookRepositoryImplementation>();
+
+            //Implementação do generic repository
+            services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
