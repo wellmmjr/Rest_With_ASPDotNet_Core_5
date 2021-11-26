@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "mrhaPaExX1DGG5MimhAbX4hdGV9yJV2rS6Dx6P3x9Kb7B11C1VQe1I9SsEjDDH7ZJfqdUZx/xMiggJVUNkaxcA==",
+  "dgSpecHash": "j832sZGGFdWvRY5iCV/1aqjOMK5m7WkGm7QrrozgpxcOCT4cNtmj5XA4UVqucW3bmdJwITi2jbzBAUEnYPhmOQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\junio\\Documents\\Projetos Treinamento\\UdemyDotNet\\08 RestWithASPNet Person With ValueObject\\RestWithASPNet\\RestWithASPNet\\RestWithASPNet.csproj",
+  "projectFilePath": "C:\\Users\\junio\\Documents\\Projetos Treinamento\\UdemyDotNet\\09 RestWithASPNet Person With Custom Serialization\\RestWithASPNet\\RestWithASPNet\\RestWithASPNet.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\junio\\.nuget\\packages\\bouncycastle.netcore\\1.8.5\\bouncycastle.netcore.1.8.5.nupkg.sha512",
     "C:\\Users\\junio\\.nuget\\packages\\evolve\\3.0.0\\evolve.3.0.0.nupkg.sha512",
