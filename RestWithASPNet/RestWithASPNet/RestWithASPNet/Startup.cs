@@ -12,6 +12,7 @@ using RestWithASPNet.Repository.Generic;
 using Serilog;
 using System;
 using System.Collections.Generic;
+using Microsoft.Net.Http.Headers;
 
 namespace RestWithASPNet
 {
@@ -37,6 +38,19 @@ namespace RestWithASPNet
         {
 
             services.AddControllers();
+
+            //services para Content Negotiation
+            services.AddMvc(
+                options =>
+                {
+                    options.RespectBrowserAcceptHeader = true;
+
+                    options.FormatterMappings.SetMediaTypeMappingForFormat("xml", MediaTypeHeaderValue.Parse("application/xml"));
+                    options.FormatterMappings.SetMediaTypeMappingForFormat("json", MediaTypeHeaderValue.Parse("application/json"));
+
+                }
+             )
+            .AddXmlSerializerFormatters();
 
             //provê conexão com banco de dados MySQL
             var connection = Configuration["MySQLConnection:MySQLConnectionString"];
