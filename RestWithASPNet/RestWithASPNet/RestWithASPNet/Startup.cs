@@ -9,17 +9,28 @@ using RestWithASPNet.Business.Implementations;
 using RestWithASPNet.Model.Context;
 using RestWithASPNet.Repository;
 using RestWithASPNet.Repository.Implementations;
+using Serilog;
+using System;
+using System.Collections.Generic;
 
 namespace RestWithASPNet
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
 
         public IConfiguration Configuration { get; }
+        public IWebHostEnvironment Enviorment { get; }
+        public Startup(IConfiguration configuration, IWebHostEnvironment environment)
+        {
+            Configuration = configuration;
+
+            Enviorment = environment;
+
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.Console()
+                .CreateLogger();
+        }
+
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -32,12 +43,22 @@ namespace RestWithASPNet
             services.AddDbContext<MySQLContext>(options => options.UseMySql(connection, 
                 ServerVersion.AutoDetect(connection)));
 
+            //Migrations Implementation
+            if (Enviorment.IsDevelopment())
+            {
+                MigrateDataBase(connection);
+            }
+
             //provê versionamento de código pelo pacote nuget
             services.AddApiVersioning();
 
-            //injeção de dependência
+            //injeção de dependência para Person
             services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
             services.AddScoped<IPersonRepository, PersonRepositoryImplementation>();
+
+            //injeção de dependência para Book
+            services.AddScoped<IBookBusiness, BookBusinessImplementation>();
+            services.AddScoped<IBookRepository, BookRepositoryImplementation>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,6 +79,25 @@ namespace RestWithASPNet
             {
                 endpoints.MapControllers();
             });
+        }
+
+        private void MigrateDataBase(string connection)
+        {
+            try
+            {
+                var evolveConnection = new MySql.Data.MySqlClient.MySqlConnection(connection);
+                var evolve = new Evolve.Evolve(evolveConnection, msg => Log.Information(msg))
+                {
+                    Locations = new List<string> { "db/migrations", "db/dataset"},
+                    IsEraseDisabled = true,
+                };
+                evolve.Migrate();
+            }
+            catch (Exception ex)
+            {
+                Log.Error("DataBase Migration failed ", ex);
+                throw;
+            }
         }
     }
 }
