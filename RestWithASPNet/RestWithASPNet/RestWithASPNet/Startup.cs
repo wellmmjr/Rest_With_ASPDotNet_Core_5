@@ -25,9 +25,13 @@ namespace RestWithASPNet
 
             services.AddControllers();
 
+            //provê conexão com banco de dados MySQL
             var connection = Configuration["MySQLConnection:MySQLConnectionString"];
             services.AddDbContext<MySQLContext>(options => options.UseMySql(connection, 
                 ServerVersion.AutoDetect(connection)));
+
+            //provê versionamento de código pelo pacote nuget
+            services.AddApiVersioning();
 
             //injeção de dependência
             services.AddScoped<IPersonService, PersonServiceImplementation>();
