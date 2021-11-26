@@ -27,6 +27,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authorization;
+using RestWithASPNet.Repository.Person;
 
 namespace RestWithASPNet
 {
@@ -173,6 +174,9 @@ namespace RestWithASPNet
 
             //Injeção para TOKEN Services
             services.AddTransient<ITokenService, TokenService>();
+            
+            //Injeção para PATCH de IPersonRepository
+            services.AddScoped<IPersonRepository, PersonRepository>();
 
         }
 

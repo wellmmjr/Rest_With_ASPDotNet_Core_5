@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "I1b5wgkUL8WKfYjWSQ2ZZYpaXz7upruEkAdx5O/JphucUrs9jDXYRkro8NIj/PT7ejgdUIGmoCmoafMRh7h+AQ==",
+  "dgSpecHash": "Wo8yatT9HPkJePKHXOAEbEkM4jSEEQwMXDpCfBjGDChY5J3TRdb/ll/gBW4JWu3mk/PwYCUz79hdU0KYrK3ERA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\junio\\Documents\\Projetos Treinamento\\UdemyDotNet\\13 RestWithASPNet Person With CORS And Authentication\\RestWithASPNet\\RestWithASPNet\\RestWithASPNet.csproj",
+  "projectFilePath": "C:\\Users\\junio\\Documents\\Projetos Treinamento\\UdemyDotNet\\14 RestWithASPNet Person With PATCH\\RestWithASPNet\\RestWithASPNet\\RestWithASPNet.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\junio\\.nuget\\packages\\bouncycastle.netcore\\1.8.5\\bouncycastle.netcore.1.8.5.nupkg.sha512",
     "C:\\Users\\junio\\.nuget\\packages\\evolve\\3.0.0\\evolve.3.0.0.nupkg.sha512",
