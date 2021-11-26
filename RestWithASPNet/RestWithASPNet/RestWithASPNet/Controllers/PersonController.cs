@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using RestWithASPNet.Business;
 using RestWithASPNet.Data.VO;
@@ -9,6 +10,7 @@ namespace RestWithASPNet.Controllers
 {
     [ApiVersion("1")]
     [ApiController]
+    [Authorize("Bearer")]
     [Route("v{version:apiVersion}/api/person")]
     public class PersonController : ControllerBase
     {
