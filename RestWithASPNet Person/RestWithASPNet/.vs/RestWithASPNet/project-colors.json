@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "c13d43c0-39f0-4297-b46e-f930647079a4": {
+      "ProjectGuid": "c13d43c0-39f0-4297-b46e-f930647079a4",
+      "DisplayName": "RestWithASPNet",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}
