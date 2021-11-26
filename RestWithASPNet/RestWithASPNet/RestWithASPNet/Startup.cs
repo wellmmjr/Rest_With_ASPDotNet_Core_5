@@ -16,6 +16,8 @@ using Microsoft.Net.Http.Headers;
 using RestWithASPNet.Hypermedia.Filters;
 using RestWithASPNet.Hypermedia.Abstract;
 using RestWithASPNet.Hypermedia.Enricher;
+using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Rewrite;
 
 namespace RestWithASPNet
 {
@@ -75,6 +77,23 @@ namespace RestWithASPNet
             //provê versionamento de código pelo pacote nuget
             services.AddApiVersioning();
 
+            //SERVICES PARA DOCUMENTAÇÃO SWAGGER
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1",
+                    new OpenApiInfo
+                    {
+                        Title = "REST API With ASP.Net Core 5 and Docker",
+                        Version = "v1",
+                        Description = "REST API With ASP.Net Core 5 and Docker With SimpleCRUD",
+                        Contact = new OpenApiContact
+                        {
+                            Name = "Wellington Mendes",
+                            Url = new Uri ("https://github.com/wellmmjr")
+                        }
+                    });
+            });
+
             //injeção de dependência para Person
             services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
 
@@ -96,6 +115,21 @@ namespace RestWithASPNet
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            /* CONFIGURAÇÕES PARA DOCUMENTAÇÃO DE SWAGGER --------- INICIO */
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "REST API With ASP.Net Core 5 and Docker - V1");
+            });
+
+            var option = new RewriteOptions();
+
+            option.AddRedirect("^$", "swagger");
+
+            app.UseRewriter(option);
+            /* CONFIGURAÇÕES PARA DOCUMENTAÇÃO DE SWAGGER -------- FIM */
 
             app.UseAuthorization();
 

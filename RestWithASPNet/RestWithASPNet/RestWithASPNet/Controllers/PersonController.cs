@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using RestWithASPNet.Business;
 using RestWithASPNet.Data.VO;
 using RestWithASPNet.Hypermedia.Filters;
+using System.Collections.Generic;
 
 namespace RestWithASPNet.Controllers
 {
@@ -21,6 +22,10 @@ namespace RestWithASPNet.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(200, Type = typeof(List<PersonVO>))]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult FindAll()
         {
@@ -28,6 +33,10 @@ namespace RestWithASPNet.Controllers
         }
         
         [HttpGet("{id}")]
+        [ProducesResponseType(200, Type = typeof(PersonVO))]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult FindById(long id)
         {
@@ -39,6 +48,9 @@ namespace RestWithASPNet.Controllers
         }
         
         [HttpPost()]
+        [ProducesResponseType(200, Type = typeof(PersonVO))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult CreatePerson([FromBody] PersonVO person)
         {
@@ -48,6 +60,9 @@ namespace RestWithASPNet.Controllers
         }
         
         [HttpPut()]
+        [ProducesResponseType(200, Type = typeof(PersonVO))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult UpdatePerson([FromBody] PersonVO person)
         {
@@ -57,6 +72,9 @@ namespace RestWithASPNet.Controllers
         }
         
         [HttpDelete("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         public IActionResult DeletePerson(long id)
         {
             _personBusiness.Delete(id);
