@@ -1,6 +1,7 @@
 ﻿using RestWithASPNet.Model.Context;
 using RestWithASPNet.Repository.Generic;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace RestWithASPNet.Repository.Person
@@ -31,6 +32,23 @@ namespace RestWithASPNet.Repository.Person
                 }
             }
             return user;
+        }
+
+        public List<Model.Person> FindByName(string firstName, string secondName)
+        {
+            if (!string.IsNullOrWhiteSpace(firstName) && !string.IsNullOrWhiteSpace(secondName))
+            {
+                return _context.People.Where(p => p.FirstName.Contains(firstName) 
+                && p.SecondNamed.Contains(secondName)).ToList();
+            }else if (!string.IsNullOrWhiteSpace(firstName) && string.IsNullOrWhiteSpace(secondName))
+            {
+                return _context.People.Where(p => p.FirstName.Contains(firstName)).ToList();
+            }else if (string.IsNullOrWhiteSpace(firstName) && !string.IsNullOrWhiteSpace(secondName))
+            {
+                return _context.People.Where(p => p.SecondNamed.Contains(secondName)).ToList();
+            }
+
+            return null;
         }
     }
 }
