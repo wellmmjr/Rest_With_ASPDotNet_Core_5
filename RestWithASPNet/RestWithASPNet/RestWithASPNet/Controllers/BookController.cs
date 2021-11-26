@@ -4,6 +4,7 @@ using RestWithASPNet.Business;
 using RestWithASPNet.Data.VO;
 using RestWithASPNet.Hypermedia.Filters;
 using RestWithASPNet.Model;
+using System.Collections.Generic;
 
 namespace RestWithASPNet.Controllers
 {
@@ -22,6 +23,10 @@ namespace RestWithASPNet.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(200, Type = typeof(List<BookVO>))]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult FindAll()
         {
@@ -29,6 +34,10 @@ namespace RestWithASPNet.Controllers
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType(200, Type = typeof(BookVO))]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult FindById(long id)
         {
@@ -39,6 +48,9 @@ namespace RestWithASPNet.Controllers
         }
 
         [HttpPost()]
+        [ProducesResponseType(200, Type = typeof(BookVO))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult CreateBook([FromBody] BookVO book)
         {
@@ -48,6 +60,9 @@ namespace RestWithASPNet.Controllers
         }
         
         [HttpPut()]
+        [ProducesResponseType(200, Type = typeof(BookVO))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult UpdateBook([FromBody] BookVO book)
         {
@@ -57,6 +72,9 @@ namespace RestWithASPNet.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         public IActionResult Delete(long id)
         {
             _bookBusiness.Delete(id);
