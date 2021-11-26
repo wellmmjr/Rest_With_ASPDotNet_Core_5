@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using RestWithASPNet.Business;
+using RestWithASPNet.Data.VO;
 using RestWithASPNet.Model;
 
 namespace RestWithASPNet.Controllers
@@ -35,7 +36,7 @@ namespace RestWithASPNet.Controllers
         }
 
         [HttpPost()]
-        public IActionResult CreateBook([FromBody] Book book)
+        public IActionResult CreateBook([FromBody] BookVO book)
         {
             if (book == null) return NotFound();
 
@@ -43,7 +44,7 @@ namespace RestWithASPNet.Controllers
         }
         
         [HttpPut()]
-        public IActionResult UpdateBook([FromBody] Book book)
+        public IActionResult UpdateBook([FromBody] BookVO book)
         {
             if (book == null) return NotFound();
 

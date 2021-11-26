@@ -16,9 +16,9 @@ namespace RestWithASPNet.Model
         public DateTime LaunchDate { get; set; }
         
         [Column("price")]
-        public decimal price { get; set; }
+        public decimal Price { get; set; }
 
         [Column("title")]
-        public string title { get; set; }
+        public string Title { get; set; }
     }
 }

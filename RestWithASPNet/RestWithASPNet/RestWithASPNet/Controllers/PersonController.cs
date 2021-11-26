@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using RestWithASPNet.Business;
-using RestWithASPNet.Model;
+using RestWithASPNet.Data.VO;
 
 namespace RestWithASPNet.Controllers
 {
@@ -36,7 +36,7 @@ namespace RestWithASPNet.Controllers
         }
         
         [HttpPost()]
-        public IActionResult CreatePerson([FromBody] Person person)
+        public IActionResult CreatePerson([FromBody] PersonVO person)
         {
             if (person == null) return NotFound();
 
@@ -44,7 +44,7 @@ namespace RestWithASPNet.Controllers
         }
         
         [HttpPut()]
-        public IActionResult UpdatePerson([FromBody] Person person)
+        public IActionResult UpdatePerson([FromBody] PersonVO person)
         {
             if (person == null) return NotFound();
 
