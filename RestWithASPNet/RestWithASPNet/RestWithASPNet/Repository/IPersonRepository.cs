@@ -1,9 +1,9 @@
 ﻿using RestWithASPNet.Model;
 using System.Collections.Generic;
 
-namespace RestWithASPNet.Services
+namespace RestWithASPNet.Repository
 {
-    public interface IPersonService
+    public interface IPersonRepository
     {
         Person Create(Person person);
 
@@ -14,5 +14,7 @@ namespace RestWithASPNet.Services
         Person Update(Person person);
 
         void Delete(long id);
+
+        bool ExistsPerson(long id);
     }
 }
