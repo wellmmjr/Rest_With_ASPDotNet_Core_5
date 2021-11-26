@@ -18,6 +18,15 @@ using RestWithASPNet.Hypermedia.Abstract;
 using RestWithASPNet.Hypermedia.Enricher;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Rewrite;
+using RestWithASPNet.Services;
+using RestWithASPNet.Services.Implementations;
+using RestWithASPNet.Repository.User;
+using RestWithASPNet.Configuration;
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.AspNetCore.Authorization;
 
 namespace RestWithASPNet
 {
@@ -41,6 +50,58 @@ namespace RestWithASPNet
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            /* CONFIGURAÇÕES PARA SEGURANÇA E TOKEN ------------------- INICIO */
+
+            var tokenConfigurations = new TokenConfiguration();
+
+            new ConfigureFromConfigurationOptions<TokenConfiguration>(
+                Configuration.GetSection("TokenConfigurations")
+                )
+                .Configure(tokenConfigurations);
+
+            services.AddSingleton(tokenConfigurations);
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = tokenConfigurations.Issuer,
+                        ValidAudience = tokenConfigurations.Audience,
+                        IssuerSigningKey = new SymmetricSecurityKey(
+                                Encoding.UTF8.GetBytes(
+                                    tokenConfigurations.Secret
+                                    )
+                            )
+                    };
+                });
+
+            services.AddAuthorization(auth =>
+            {
+                auth.AddPolicy("Bearer", new AuthorizationPolicyBuilder()
+                        .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+                        .RequireAuthenticatedUser().Build()
+                    );
+            });
+
+            /* CONFIGURAÇÕES PARA SEGURANÇA E TOKEN ------------------- FIM */
+
+            //services para Configurar CORS - CROSS ORIGIN RESOURCE SERVICE
+            services.AddCors(options => options.AddDefaultPolicy(builder =>
+            {
+                builder.AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+            }));
 
             services.AddControllers();
 
@@ -102,6 +163,17 @@ namespace RestWithASPNet
 
             //Implementação do generic repository
             services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
+
+
+            //injeção para LOGIN e AUTENTICAÇÃO
+            services.AddScoped<ILoginBusiness, LoginBusinessImplementation>();
+            
+            //injeção para USER 
+            services.AddScoped<IUserRepository, UserRepository>();
+
+            //Injeção para TOKEN Services
+            services.AddTransient<ITokenService, TokenService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -115,6 +187,9 @@ namespace RestWithASPNet
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            //PARA HABILITAR CORS (DEVE FICAR APÓS "UseHttpsRedirection" E "UseRouting" ASSIM COMO ANTES DE "UseEndpoints"
+            app.UseCors();
 
             /* CONFIGURAÇÕES PARA DOCUMENTAÇÃO DE SWAGGER --------- INICIO */
             app.UseSwagger();
@@ -137,7 +212,8 @@ namespace RestWithASPNet
             {
                 endpoints.MapControllers();
 
-                endpoints.MapControllerRoute("DefaultApi", "{controller=values}/{id?}"); // adicionado para HATEOAS
+                // adicionado para HATEOAS
+                endpoints.MapControllerRoute("DefaultApi", "{controller=values}/{id?}");
             });
         }
 
