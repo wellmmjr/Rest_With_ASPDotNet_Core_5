@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "CaljJnuFuM1Exks5GeqpdA8zeCGVhQxE+MUWE96KjBREcDDL38W5y2rV1ES9yhN4F4Q47EGm0vvk8PVzuceIGw==",
+  "dgSpecHash": "TV6sQuZ3SocCo6yBDTvdH8QGE85VqOahp4jLctG5x41+kypbnRE2yoH/3z5ckM5H2dtJGw73yBIpFRmzkHLQSg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\junio\\Documents\\Projetos Treinamento\\UdemyDotNet\\03 RestWithASPNet Person With MySQL\\RestWithASPNet\\RestWithASPNet\\RestWithASPNet.csproj",
+  "projectFilePath": "C:\\Users\\junio\\Documents\\Projetos Treinamento\\UdemyDotNet\\04 RestWithASPNet Person With Version\\RestWithASPNet\\RestWithASPNet\\RestWithASPNet.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\junio\\.nuget\\packages\\microsoft.aspnetcore.mvc.versioning\\5.0.0\\microsoft.aspnetcore.mvc.versioning.5.0.0.nupkg.sha512",
     "C:\\Users\\junio\\.nuget\\packages\\microsoft.entityframeworkcore\\5.0.5\\microsoft.entityframeworkcore.5.0.5.nupkg.sha512",
     "C:\\Users\\junio\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\5.0.5\\microsoft.entityframeworkcore.abstractions.5.0.5.nupkg.sha512",
     "C:\\Users\\junio\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\5.0.5\\microsoft.entityframeworkcore.analyzers.5.0.5.nupkg.sha512",

@@ -9,8 +9,9 @@ using System.Threading.Tasks;
 
 namespace RestWithASPNet.Controllers
 {
+    [ApiVersion("1")]
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("v{version:apiVersion}/api/person")]
     public class PersonController : ControllerBase
     {
         private readonly ILogger<PersonController> _logger;
