@@ -72,7 +72,18 @@ namespace RestWithASPNet.Controllers
 
             return Ok(_personBusiness.Update(person));
         }
-        
+
+        [HttpPatch("{id}")]
+        [ProducesResponseType(200, Type = typeof(List<PersonVO>))]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [TypeFilter(typeof(HyperMediaFilter))]
+        public IActionResult ActiveUser(long id)
+        {
+            return Ok(_personBusiness.ActiveUser(id));
+        }
+
         [HttpDelete("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]

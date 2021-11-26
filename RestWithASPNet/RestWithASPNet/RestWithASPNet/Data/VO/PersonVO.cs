@@ -22,6 +22,9 @@ namespace RestWithASPNet.Data.VO
         //[JsonIgnore]
         public string Gender { get; set; }
 
+        [JsonPropertyName("active")]
+        public bool Enabled { get; set; }
+
         public List<HyperMediaLink> Links { get; set; } = new List<HyperMediaLink>();
     }
 }

@@ -14,6 +14,8 @@ namespace RestWithASPNet.Business
 
         PersonVO Update(PersonVO personVO);
 
+        PersonVO ActiveUser(long id);
+
         void Delete(long id);
     }
 }
