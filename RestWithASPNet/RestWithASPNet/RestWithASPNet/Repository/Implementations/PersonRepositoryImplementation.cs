@@ -62,7 +62,7 @@ namespace RestWithASPNet.Repository.Implementations
 
         public Person Update(Person person)
         {
-            if (!ExistsPerson(person.Id)) return new Person();
+            if (!ExistsPerson(person.Id)) return null;
 
             var result = _context.People.SingleOrDefault(p => p.Id.Equals(person.Id));
 
