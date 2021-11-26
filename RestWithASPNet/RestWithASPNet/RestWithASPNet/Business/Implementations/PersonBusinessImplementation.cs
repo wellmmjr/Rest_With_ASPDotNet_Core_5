@@ -1,10 +1,8 @@
-﻿using RestWithASPNet.Model;
-using RestWithASPNet.Model.Context;
+﻿using RestWithASPNet.Data.Converter.Implementation;
+using RestWithASPNet.Data.VO;
+using RestWithASPNet.Model;
 using RestWithASPNet.Repository;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
 
 namespace RestWithASPNet.Business.Implementations
 {
@@ -12,14 +10,18 @@ namespace RestWithASPNet.Business.Implementations
     {
         private readonly IRepository<Person> _repository;
 
-
+        private readonly PersonConverter _converter;
         public PersonBusinessImplementation(IRepository<Person> repository)
         {
             _repository = repository;
+            _converter = new PersonConverter();
         }
-        public Person Create(Person person)
+        public PersonVO Create(PersonVO personVO)
         {
-            return _repository.Create(person);
+            var person = _converter.Parse(personVO);
+            _repository.Create(person);
+
+            return _converter.Parse(person);
         }
 
         public void Delete(long id)
@@ -27,20 +29,23 @@ namespace RestWithASPNet.Business.Implementations
             _repository.Delete(id);
         }
 
-        public List<Person> FindAll()
+        public List<PersonVO> FindAll()
         {
-            return _repository.FindAll();
+            return _converter.Parse(_repository.FindAll());
         }
 
 
-        public Person FindById(long id)
+        public PersonVO FindById(long id)
         {
-            return _repository.FindById(id);
+            return _converter.Parse(_repository.FindById(id));
         }
 
-        public Person Update(Person person)
+        public PersonVO Update(PersonVO personVO)
         {
-            return _repository.Update(person);
+            var person = _converter.Parse(personVO);
+            _repository.Update(person);
+
+            return _converter.Parse(person);
         }
     }
 }

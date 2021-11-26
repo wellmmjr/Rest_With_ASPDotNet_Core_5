@@ -1,17 +1,18 @@
-﻿using RestWithASPNet.Model;
+﻿using RestWithASPNet.Data.VO;
+using RestWithASPNet.Model;
 using System.Collections.Generic;
 
 namespace RestWithASPNet.Business
 {
     public interface IPersonBusiness
     {
-        Person Create(Person person);
+        PersonVO Create(PersonVO personVO);
 
-        Person FindById(long id);
+        PersonVO FindById(long id);
 
-        List<Person> FindAll();
+        List<PersonVO> FindAll();
 
-        Person Update(Person person);
+        PersonVO Update(PersonVO personVO);
 
         void Delete(long id);
     }
